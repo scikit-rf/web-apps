@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+	<head>
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+	</head>
+<body>
+	<center>
+		
+		<h1>Online Touchstone Plotter</h1>
+		<font size=2>
+		<form enctype="multipart/form-data" 
+			action="../cgi-bin/touchstone_plotter.py" method="post">
+			<p>Touchstone File: <input type="file" name="filename" 
+				title=" Your touchstone file:   *.s?p  "/></p>
+			
+			<table border="0">
+			<tr>
+			<td><b>Format:</b></td>
+			<td>
+				<table border="0">
+				<tr>
+				<td><input type="radio" name="component" value="s_db" checked="1" /> Mag [dB]</td>
+				<td><input type="radio" name="component" value="s_deg" /> Phase</td>
+				<td><input type="radio" name="component" value="s_smith" /> Smith</td>
+				</tr><tr>
+				<td><input type="radio" name="component" value="s_mag" /> Mag</td>
+				<td><input type="radio" name="component" value="s_deg_unwrap" /> Phase Unwrap</td>
+				<td><input type="radio" name="component" value="s_complex" /> Complex</td>
+				</tr>
+				</table>
+			</td>
+			</tr>
+			<tr>
+			<td><b>Options:</b></td>
+			<td>
+			<p>
+			<input type="checkbox" name="legend_on" value="on" checked="1"  /> legend
+			<input type="checkbox" name="grid_on" value="on"  /> grid
+			<input type="checkbox" name="latex_on" value="on" checked="1"   /> latex
+			&nbsp;&nbsp;&nbsp;&nbsp; f_unit:
+				<select name="f_unit">
+					<option value="auto" selected = "selected">auto</option>
+					<option value="KHz">KHz</option>
+					<option value="MHz">MHz</option>
+					<option value="GHz">GHz</option>
+					<option value="THz">THz</option>
+				
+				</select>
+			</p>
+			</td>
+			
+			</tr>
+			
+			<tr>
+			<td>
+			<b>Title</b>
+			</td>
+			<td>
+			<input type="text" name="title" value="" size="35" title="Example: Smith Chart"><br />
+			</td>
+			</tr>
+			<tr>
+			<td>
+			<b>args <a href='http://scikit-rf.org/doc/dev/tutorials/plotting.html'>?</a></b>
+			</td>
+			<td>
+			<input type="text" name="args" value="[]"  size="35" title="Example: [0,1]"><br />
+			</td>
+			</tr>
+			<tr>
+			<td>
+			<b>kwargs <a href='http://scikit-rf.org/doc/dev/tutorials/plotting.html'>?</a></b>
+			</td>
+			<td>
+			<input type="text" name="kwargs" value="{}"  size="35" 
+				title="Example: { 'color' : 'red' ,  'marker' : 'x', 'markevery' : 5 }"><br />
+			</td>
+			</tr>
+			</table> 
+			
+			
+			<p><input type="submit" value="      Plot!      " /></p>
+		</form>
+		<p><font size="1"><a href='mailto:arsenovic@virginia.edu'>Questions/Comments</a></font></p>
+		<br><br><br><br>
+		
+		<p><img src='../pics/scikit-rf-logo' width=30></img>  Powered by <a href='http://scikit-rf.org'>scikit-rf</a></p>
+		</font>
+	   
+   </center>
+</body>
+</html>
