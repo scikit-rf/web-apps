@@ -1,31 +1,99 @@
-<!doctype html>
+
 <html>
-	<head>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<head>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+<script type="text/javascript">
+	var n_stds = 0
+	var min_n_stds = 3
+	var measured = new Array();
+	var ideals = new Array();
+	var ideals = new Array();
+	function Std(parentName, num){
 	
-	<script type="text/javascipt">
-	    var counter = 1;
-		var limit = 3;
-	    function addInput(divName){
-		     if (counter == limit)  {
-			  alert("You have reached the limit of adding " + counter + " inputs");
-		     }
-		     else {
-			  var newdiv = document.createElement('div');
-			  newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'>";
-			  document.getElementById(divName).appendChild(newdiv);
-			  counter++;
-		     }
+	this.num  = num
+	this.name = "std"+this.num
+	this.parent = document.getElementById(parentName)
+	this.div = document.createElement('div')
+	this.div.innerHTML = "<p>#"+this.num+" : <input type='file' name='"+this.name+"'/></p>"
+	this.parent.appendChild(this.div)
+	
+	
+	}
+	function addStd(){
+		var measure = new Std('measured', n_stds)
+		var ideal = new Std('ideals', n_stds)
+		measured.push(measure)
+		ideals.push(ideal)
+		n_stds++;
+	}
+	function rmStd(parentName){
+		if (n_stds > min_n_stds){
+			var measure = measured[measured.length-1]
+			var ideal = ideals[ideals.length-1]
+			measure.parent.removeChild(measure.div)
+			ideal.parent.removeChild(ideal.div)
+			measured.pop()
+			ideals.pop()
+			n_stds--;
 		}
-	</script>
-	
-	</head>
-    <body>
-	<form method="POST">
-	    <div id="dynamicInput">
-	    Entry 1<br><input type="text" name="myInputs[]">
-	    </div>
-	    <input type="button" value="Add another text input" onClick="addInput('dynamicInput');">
-	</form>	
-    </body>
+		else{
+		alert('no')
+		}
+	}
+</script>
+
+</head>
+<body>
+<form enctype="multipart/form-data" 
+ method="post"
+ action="../cgi-bin/calibration.py">
+
+
+<center>
+<table border=1 width=80%>
+<tr>
+<td>
+<center>
+<h2>Measurements</h2>
+</center>
+</td>
+<td>
+<center>
+<h2>Ideals</h2>
+</center>
+</td>
+</tr>
+<tr>
+<td>
+
+<div id="measured"  style="border: 1px solid red; padding: 10px;">
+
+
+
+</td>
+<td>
+	<div id="ideals"  style="border: 1px solid green; padding: 10px;">
+</div>
+</td>
+</tr>
+<tr><td colspan = 2>
+	<center>
+<input type="button" value="Add Standard" onClick="addStd('measured');">
+<input type="button" value="Remove Standard" onClick="rmStd('measured');">
+<br><br>
+<input type="Submit" value="Calibrate!">
+</center>
+</td></tr>
+</table>
+</form>
+</center>
+
+<script type="text/javascript">
+	addStd('measured');
+	addStd('measured');
+	addStd('measured');
+</script>
+
+</body>
 </html>	
