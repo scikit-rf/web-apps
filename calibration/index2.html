@@ -6,48 +6,66 @@
 <script type="text/javascript">
 	var n_stds = 0
 	var min_n_stds = 3
-	var measured = new Array();
-	var ideals = new Array();
-	var ideals = new Array();
-	function Std(parentName, num){
+	var stds = new Array();
+	var measuredDivParent = 'measured'
+	var idealsDivParent = 'ideals'
 	
-	this.num  = num
-	this.name = "std"+this.num
-	this.parent = document.getElementById(parentName)
-	this.div = document.createElement('div')
-	this.div.innerHTML = "<p>#"+this.num+" : <input type='file' name='"+this.name+"'/></p>"
-	this.parent.appendChild(this.div)
-	
-	
+	function Std(num, measuredDiv, idealDiv)
+	{
+    	this.num  = num
+    	this.name = "std"+this.num
+    	
+    	this.measuredDivParent = document.getElementById(measuredDivParent)
+    	this.idealsDivParent = document.getElementById(idealsDivParent)
+    	
+    	this.measuredDiv = document.createElement('div')
+    	this.idealsDiv= document.createElement('div')
+    	
+    	this.idealsDiv.innerHTML = "<p>#"+ this.num + 
+    	   " : <input type='file' id='ideal'" + this.num + 
+    	   " name='ideal" + this.num + "'/></p>"
+    	this.measuredDiv.innerHTML = "<p>#"+ this.num + 
+    	   " : <input type='file' id='measure'" + this.num + 
+    	   " name='measure" + this.num + "'/></p>"
+    	
+    	this.measuredDivParent.appendChild(this.measuredDiv)
+       	this.idealsDivParent.appendChild(this.idealsDiv)
 	}
-	function addStd(){
-		var measure = new Std('measured', n_stds)
-		var ideal = new Std('ideals', n_stds)
-		measured.push(measure)
-		ideals.push(ideal)
+
+	function addStd()
+	{
+		var std = new Std(n_stds,measuredDivParent,idealsDivParent);
+		stds.push(std);
 		n_stds++;
+		document.getElementById('output').innerHTML=n_stds
 	}
-	function rmStd(parentName){
-		if (n_stds > min_n_stds){
-			var measure = measured[measured.length-1]
-			var ideal = ideals[ideals.length-1]
-			measure.parent.removeChild(measure.div)
-			ideal.parent.removeChild(ideal.div)
-			measured.pop()
-			ideals.pop()
+
+	function rmStd()
+	{
+		if (n_stds > min_n_stds)
+		{
+			var std = stds[stds.length-1];
+			std.measuredDivParent.removeChild(std.measuredDiv);
+			std.idealsDivParent.removeChild(std.idealsDiv);
+			stds.pop();
 			n_stds--;
+			
+			document.getElementById('output').innerHTML=n_stds
 		}
-		else{
-		alert('no')
+		else
+		{
+		  alert('no')
 		}
 	}
+	
 </script>
 
 </head>
+<center><h1>Online Calibrator</h1></center>
 <body>
 <form enctype="multipart/form-data" 
  method="post"
- action="../cgi-bin/calibration.py">
+ action="../cgi-bin/calibrate.py">
 
 
 <center>
@@ -55,45 +73,47 @@
 <tr>
 <td>
 <center>
-<h2>Measurements</h2>
+	<h2>Ideals</h2>
 </center>
 </td>
 <td>
 <center>
-<h2>Ideals</h2>
+	<h2>Measurements</h2>
 </center>
 </td>
 </tr>
 <tr>
 <td>
-
-<div id="measured"  style="border: 1px solid red; padding: 10px;">
-
-
-
+	<div id="ideals"  style="border: 1px solid red; padding: 10px;">
 </td>
 <td>
-	<div id="ideals"  style="border: 1px solid green; padding: 10px;">
+	<div id="measured"  style="border: 1px solid green; padding: 10px;">
 </div>
 </td>
 </tr>
 <tr><td colspan = 2>
-	<center>
-<input type="button" value="Add Standard" onClick="addStd('measured');">
-<input type="button" value="Remove Standard" onClick="rmStd('measured');">
-<br><br>
-<input type="Submit" value="Calibrate!">
+<center>
+	<input type="button" value="Add Standard" onClick="addStd();">
+	<input type="button" value="Remove Standard" onClick="rmStd();">
+	<br><br>
+	<input type="Submit" value="Calibrate!">
+	<textarea id ="output" name="output"></textarea>
 </center>
 </td></tr>
 </table>
 </form>
-</center>
+
 
 <script type="text/javascript">
-	addStd('measured');
-	addStd('measured');
-	addStd('measured');
+	addStd();
+	addStd();
+	addStd();
 </script>
 
+<p><font size="1"><a href='mailto:arsenovic@virginia.edu'>Questions/Comments</a></font></p>
+<br><br><br><br>
+<p><img src='../pics/scikit-rf-logo' width=30></img>  Powered by <a href='http://scikit-rf.org'>scikit-rf</a></p>
+</font>
+</center>
 </body>
 </html>	
