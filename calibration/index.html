@@ -65,7 +65,7 @@
     	
     	this.idealsDiv.innerHTML = "<p>"+ this.num + 
     	   " : <input type='file' id='ideal'" + this.num + 
-    	   " name='ideal" + this.num + "'/></p>"
+    	   " name='ideal" + this.num + "' /></p>"
     	this.measuredDiv.innerHTML = "<p>"+ this.num + 
     	   " : <input type='file' id='measure'" + this.num + 
     	   " name='measure" + this.num + "'/></p>"
@@ -94,14 +94,14 @@
 		var std = new Std(n_stds,measuredDivParent,idealsDivParent);
 		stds.push(std);
 		n_stds++;
-		document.getElementById('stdCounter').value=n_stds
+		document.getElementById('stdCounter').innerHTML=n_stds
 	}
 	function addDut()
 	{
 		var dut = new Dut(n_duts,dutDivParent);
 		duts.push(dut);
 		n_duts++;
-		document.getElementById('dutCounter').value=n_duts
+		document.getElementById('dutCounter').innerHTML=n_duts
 	}
 	function rmStd()
 	{
@@ -113,7 +113,7 @@
 			stds.pop();
 			n_stds--;
 			
-			document.getElementById('stdCounter').value=n_stds
+			document.getElementById('stdCounter').innerHTML=n_stds
 		}
 		else
 		{
@@ -129,21 +129,25 @@
 			duts.pop();
 			n_duts--;
 			
-			document.getElementById('dutCounter').value=n_duts
+			document.getElementById('dutCounter').innerHTML=n_duts
 		}
 		else
 		{
 		  alert('no')
 		}
 	}
-	
+	function load(){
+		addStd();
+		addStd();
+		addStd();
+		}
 </script>
 
 </head>
 
-<center><h1>Online Calibrator</h1></center>
+<center><h1>Calibration Station</h1></center>
 
-<body>
+<body onload="load()">
 <form enctype="multipart/form-data"  method="post" action="../cgi-bin/calibrate.py">
 
 
@@ -206,16 +210,12 @@
 
 </td></tr>
 </table>
-<hidden id ="stdCounter" name="stdCounter"></textarea>
-<hidden id ="dutCounter" name="dutCounter"></textarea>
+<textarea id ="stdCounter" name="stdCounter"></textarea>
+<textarea id ="dutCounter" name="dutCounter"></textarea>
 </form>
 </div>
 
-<script type="text/javascript">
-	addStd();
-	addStd();
-	addStd();
-</script>
+
 
 <p><font size="1"><a href='mailto:arsenovic@virginia.edu'>Questions/Comments</a></font></p>
 <br><br><br><br>
