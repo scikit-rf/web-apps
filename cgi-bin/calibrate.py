@@ -19,8 +19,7 @@ measured_dir = '../calibration/measured/'
 ideals_dir = '../calibration/ideals/'
 duts_dir = '../calibration/duts/'
 caled_dir = '../calibration/caled/'
-output_dir = '../calibration/output/'
-plot_dir = output_dir + 'plots/'
+plot_dir = '../calibration/plots/'
 plot_fmts = ['png','pdf']
 
 component_to_name ={
@@ -79,6 +78,7 @@ for ntwk in caled:
 	message+='''
 	<a href=\'%s\'>%s</a> <br>
 	'''%(caled_dir+fn,fn)
+	ntwk.write_touchstone(dir = caled_dir)
 
 message +='''
 <div>
