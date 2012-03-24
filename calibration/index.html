@@ -2,7 +2,45 @@
 <html>
 <head>
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<style>
+	h2{
+		padding: 10px;
+		
+	}
+	td,tr {
+		text-align: center;
+		padding: 10px;
+	} 
+	.left-cell {
+		text-align: left;
+	} 
+	
+	.outline{
+		border: 2px solid grey;
+		width: 80%;
+		border-radius:25px;
+		-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+	}
+	.suboutline{
+		border: 1px solid grey;
+		border-radius:15px;
+		-moz-border-radius:15px; /* Firefox 3.6 and earlier */
+		padding: 10px;
+	}
+	.suboutline2{
+		border: 1px solid grey;
+		border-radius:15px;
+		-moz-border-radius:15px; /* Firefox 3.6 and earlier */
+		width:70%;
+		text-align:center;
+	}
+	table{
+		width: 100%;
+	}
+	div.stds{
+	}
 
+</style>
 <script type="text/javascript">
 	var n_stds = 0
 	var n_duts= 0
@@ -56,14 +94,14 @@
 		var std = new Std(n_stds,measuredDivParent,idealsDivParent);
 		stds.push(std);
 		n_stds++;
-		document.getElementById('stdCounter').innerHTML=n_stds
+		document.getElementById('stdCounter').value=n_stds
 	}
 	function addDut()
 	{
 		var dut = new Dut(n_duts,dutDivParent);
 		duts.push(dut);
 		n_duts++;
-		document.getElementById('dutCounter').innerHTML=n_duts
+		document.getElementById('dutCounter').value=n_duts
 	}
 	function rmStd()
 	{
@@ -75,7 +113,7 @@
 			stds.pop();
 			n_stds--;
 			
-			document.getElementById('stdCounter').innerHTML=n_stds
+			document.getElementById('stdCounter').value=n_stds
 		}
 		else
 		{
@@ -91,7 +129,7 @@
 			duts.pop();
 			n_duts--;
 			
-			document.getElementById('dutCounter').innerHTML=n_duts
+			document.getElementById('dutCounter').value=n_duts
 		}
 		else
 		{
@@ -102,66 +140,76 @@
 </script>
 
 </head>
+
 <center><h1>Online Calibrator</h1></center>
+
 <body>
-<form enctype="multipart/form-data" 
- method="post"
- action="../cgi-bin/calibrate.py">
+<form enctype="multipart/form-data"  method="post" action="../cgi-bin/calibrate.py">
 
 
 <center>
-<table border=1 width=80%>
+<div class = "outline">
+<table border = 0 >
 <tr>
 <td>
-<center>
-	<h2>Ideals</h2>
-</center>
-</td>
-<td>
-<center>
-	<h2>Measurements</h2>
-</center>
+	<div class = "suboutline">
+	<table border=0>
+		<tr>
+		<td>
+			<h2>Ideals</h2>
+			<div id="ideals" class = "stds"></div>
+		</td><td>
+			<h2>Measurements</h2>
+			<div id="measured" class = "stds"></div>
+		</td>
+		</tr>
+		<tr>
+		<td colspan = 2>
+			<input type="button" value="Add Standard" onClick="addStd();">
+			<input type="button" value="Remove Standard" onClick="rmStd();">
+		</td></tr>
+		</tr>
+	</table>
+	</div>
 </td>
 </tr>
 <tr>
 <td>
-	<div id="ideals"  style="border: 1px solid red; padding: 10px;">
-</td>
-<td>
-	<div id="measured"  style="border: 1px solid green; padding: 10px;">
-</div>
+	<center>
+	<div class="suboutline2">
+	<table width = "80%">
+		<tr>
+		<td>
+			<h2>DUT's</h2>
+			<div id="duts"  class = "duts" width = 80></div>
+		</td></tr><tr><td>
+			<input type="button" value="Add DUT" onClick="addDut();">
+			<input type="button" value="Remove DUT" onClick="rmDut();">
+		</td>
+		</tr>
+	</table>
+	</div>
+	</center>
 </td>
 </tr>
-<tr><td colspan = 2>
-	<center>
-	<input type="button" value="Add Standard" onClick="addStd();">
-	<input type="button" value="Remove Standard" onClick="rmStd();">
-	</center>
+
+<tr>
+<td colspan =2>
+	<input type="checkbox" name="make report" /> option1
+	<input type="checkbox" name="make report" /> option2
 </td></tr>
-<tr><td colspan = 2>
-	<center>
-	<h2>DUT's</h2>
-	</center>
-</td></tr>
-<tr><td colspan = 2>
-	<center>
-	<div id="duts" style="border: 1px solid yellow; padding: 10px;"></div>
-	</center>
-</td></tr>
-<tr><td colspan = 2>
-	<center>
-	<input type="button" value="Add DUT" onClick="addDut();">
-	<input type="button" value="Remove DUT" onClick="rmDut();">
-	<br><br>
+<tr>
+<td colspan =2>
 	<input type="Submit"  value="Calibrate!">
+</td></tr>
 	
-	</center>
+
 </td></tr>
 </table>
-<textarea id ="stdCounter" name="stdCounter"></textarea>
-<textarea id ="dutCounter" name="dutCounter"></textarea>
+<hidden id ="stdCounter" name="stdCounter"></textarea>
+<hidden id ="dutCounter" name="dutCounter"></textarea>
 </form>
-
+</div>
 
 <script type="text/javascript">
 	addStd();
