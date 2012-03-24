@@ -1,0 +1,6 @@
+calibration/ideals/*
+calibration/measured/*
+calibration/caled/*
+calibration/duts/*
+calibration/plots/*
+!.gitignore
