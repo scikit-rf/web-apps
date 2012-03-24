@@ -21,7 +21,7 @@ output_dir = '../calibration/output/'
 plot_fmts = ['pdf','png','eps']
 
 
-n_stds = int(form.getvalue('output'))
+n_stds = int(form.getvalue('stdCounter'))
 measured =[]
 ideals = []
 message = ''

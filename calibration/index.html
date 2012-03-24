@@ -5,10 +5,14 @@
 
 <script type="text/javascript">
 	var n_stds = 0
+	var n_duts= 0
 	var min_n_stds = 3
+	var min_n_duts = 0
 	var stds = new Array();
+	var duts = new Array();
 	var measuredDivParent = 'measured'
 	var idealsDivParent = 'ideals'
+	var dutDivParent = 'duts'
 	
 	function Std(num, measuredDiv, idealDiv)
 	{
@@ -21,25 +25,46 @@
     	this.measuredDiv = document.createElement('div')
     	this.idealsDiv= document.createElement('div')
     	
-    	this.idealsDiv.innerHTML = "<p>#"+ this.num + 
+    	this.idealsDiv.innerHTML = "<p>"+ this.num + 
     	   " : <input type='file' id='ideal'" + this.num + 
     	   " name='ideal" + this.num + "'/></p>"
-    	this.measuredDiv.innerHTML = "<p>#"+ this.num + 
+    	this.measuredDiv.innerHTML = "<p>"+ this.num + 
     	   " : <input type='file' id='measure'" + this.num + 
     	   " name='measure" + this.num + "'/></p>"
     	
     	this.measuredDivParent.appendChild(this.measuredDiv)
        	this.idealsDivParent.appendChild(this.idealsDiv)
 	}
-
+	
+	function Dut(num, parentDiv)
+	{
+		this.num  = num
+    	this.name = "dut"+this.num
+    	
+    	this.dutDivParent = document.getElementById(parentDiv)
+    	
+    	this.dutDiv = document.createElement('div')
+    	
+    	this.dutDiv.innerHTML = "<p>"+ this.num + 
+    	   " : <input type='file' id='dut'" + this.num + 
+    	   " name='dut" + this.num + "'/></p>"
+    	this.dutDivParent.appendChild(this.dutDiv)
+	}
+	
 	function addStd()
 	{
 		var std = new Std(n_stds,measuredDivParent,idealsDivParent);
 		stds.push(std);
 		n_stds++;
-		document.getElementById('output').innerHTML=n_stds
+		document.getElementById('stdCounter').innerHTML=n_stds
 	}
-
+	function addDut()
+	{
+		var dut = new Dut(n_duts,dutDivParent);
+		duts.push(dut);
+		n_duts++;
+		document.getElementById('dutCounter').innerHTML=n_duts
+	}
 	function rmStd()
 	{
 		if (n_stds > min_n_stds)
@@ -50,7 +75,23 @@
 			stds.pop();
 			n_stds--;
 			
-			document.getElementById('output').innerHTML=n_stds
+			document.getElementById('stdCounter').innerHTML=n_stds
+		}
+		else
+		{
+		  alert('no')
+		}
+	}
+	function rmDut()
+	{
+		if (n_duts > min_n_duts)
+		{
+			var dut = duts[duts.length-1];
+			dut.dutDivParent.removeChild(dut.dutDiv);
+			duts.pop();
+			n_duts--;
+			
+			document.getElementById('dutCounter').innerHTML=n_duts
 		}
 		else
 		{
@@ -92,15 +133,33 @@
 </td>
 </tr>
 <tr><td colspan = 2>
-<center>
+	<center>
 	<input type="button" value="Add Standard" onClick="addStd();">
 	<input type="button" value="Remove Standard" onClick="rmStd();">
+	</center>
+</td></tr>
+<tr><td colspan = 2>
+	<center>
+	<h2>DUT's</h2>
+	</center>
+</td></tr>
+<tr><td colspan = 2>
+	<center>
+	<div id="duts" style="border: 1px solid yellow; padding: 10px;"></div>
+	</center>
+</td></tr>
+<tr><td colspan = 2>
+	<center>
+	<input type="button" value="Add DUT" onClick="addDut();">
+	<input type="button" value="Remove DUT" onClick="rmDut();">
 	<br><br>
-	<input type="Submit" value="Calibrate!">
-	<textarea id ="output" name="output"></textarea>
-</center>
+	<input type="Submit"  value="Calibrate!">
+	
+	</center>
 </td></tr>
 </table>
+<textarea id ="stdCounter" name="stdCounter"></textarea>
+<textarea id ="dutCounter" name="dutCounter"></textarea>
 </form>
 
 

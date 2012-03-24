@@ -2,16 +2,25 @@
 
 import cgi, os
 import cgitb; cgitb.enable()
+import ast
+import matplotlib
+matplotlib.use('Agg')
+import numpy
+import pylab
+import sys
+sys.path.append('/home/alex/code/scikit-rf/')
+import skrf as rf
 
 
-form = cgi.FieldStorage()
-
-# Get filename here.
-fileitem = form['filename']
-
+# intputs
 plot_dir = '../touchstone_plotter/plots/'
 plot_fmts = ['pdf','png','eps']
 touchstone_dir = '../touchstone_plotter/touchstones/'
+
+
+form = cgi.FieldStorage()
+fileitem = form['filename']
+
 # Test if the file was uploaded
 if fileitem.filename:
     # strip leading path from file name to avoid 
@@ -38,21 +47,9 @@ if fileitem.filename:
         show_grid = False
     
     title = form.getvalue('title')
-    
-    import ast
     plot_args = ast.literal_eval(form.getvalue('args'))
     plot_kwargs = ast.literal_eval(form.getvalue('kwargs'))
     
-    
-    
-    
-    import matplotlib
-    import numpy
-    matplotlib.use('Agg')
-    import pylab
-    import sys
-    sys.path.append('/home/alex/code/scikit-rf/')
-    import skrf as rf
     if latex_on:
         pylab.rcParams['text.usetex'] = True
     else:
@@ -91,11 +88,11 @@ if fileitem.filename:
 else:
     message = 'No file was uploaded'
    
-print """\
+print '''\
 Content-Type: text/html\n
 <html>
 <body>
    <p>%s</p>
 </body>
 </html>
-""" % (message,)
+''' % (message,)
